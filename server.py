@@ -1,7 +1,7 @@
 import os
 
 from fastmcp import FastMCP
-from fastmcp.server.auth.providers.workos import AuthKitProvider
+from fastmcp.server.auth.providers.workos import WorkOSProvider
 
 from gmail_client import search_emails, send_email
 
@@ -12,8 +12,10 @@ from gmail_client import search_emails, send_email
 
 BASE_URL = "https://alexvale-gmail-mcp.onrender.com"
 
-auth = AuthKitProvider(
-    authkit_domain="https://studious-sweetness-40-staging.authkit.app",
+auth = WorkOSProvider(
+    client_id=os.environ["WORKOS_CLIENT_ID"],
+    client_secret=os.environ["WORKOS_CLIENT_SECRET"],
+    authkit_domain=os.environ.get("WORKOS_AUTHKIT_DOMAIN", "https://studious-sweetness-40-staging.authkit.app"),
     base_url=BASE_URL,
     resource_base_url=BASE_URL,
 )
