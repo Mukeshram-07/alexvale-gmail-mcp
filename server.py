@@ -20,8 +20,8 @@ _redis_store = RedisStore(
     default_collection="alexvale-oauth",
 )
 _client_storage = FernetEncryptionWrapper(
-    key_value=_redis_store,
-    encryption_key=os.environ["WORKOS_CLIENT_SECRET"],
+    _redis_store,
+    source_material=os.environ["WORKOS_CLIENT_SECRET"],
 )
 
 auth = WorkOSProvider(
