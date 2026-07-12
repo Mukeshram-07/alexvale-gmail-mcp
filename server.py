@@ -36,6 +36,8 @@ auth = WorkOSProvider(
     resource_base_url=BASE_URL,
     require_authorization_consent="external",
     client_storage=_client_storage,
+    valid_scopes=["openid", "profile", "email", "offline_access"],
+    extra_authorize_params={"scope": "openid profile email offline_access"},
 )
 
 mcp = FastMCP(
