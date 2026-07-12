@@ -15,7 +15,7 @@ BASE_URL = "https://alexvale-gmail-mcp.onrender.com"
 auth = AuthKitProvider(
     authkit_domain="https://studious-sweetness-40-staging.authkit.app",
     base_url=BASE_URL,
-    resource_base_url=f"{BASE_URL}/mcp",
+    resource_base_url=BASE_URL,
 )
 
 mcp = FastMCP(
