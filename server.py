@@ -22,6 +22,7 @@ _redis_store = RedisStore(
 _client_storage = FernetEncryptionWrapper(
     _redis_store,
     source_material=os.environ["WORKOS_CLIENT_SECRET"],
+    salt="alexvale-gmail-mcp-oauth",
 )
 
 auth = WorkOSProvider(
