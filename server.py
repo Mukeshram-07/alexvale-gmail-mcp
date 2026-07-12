@@ -1,6 +1,7 @@
 import os
 
 from fastmcp import FastMCP
+from fastmcp.server.auth.providers.workos import AuthKitProvider
 
 from gmail_client import search_emails, send_email
 
@@ -9,7 +10,18 @@ from gmail_client import search_emails, send_email
 # Initialize MCP Server
 # --------------------------------------------------
 
-mcp = FastMCP("ALEXVALE Gmail MCP")
+BASE_URL = "https://alexvale-gmail-mcp.onrender.com"
+
+auth = AuthKitProvider(
+    authkit_domain="https://studious-sweetness-40-staging.authkit.app",
+    base_url=BASE_URL,
+    resource_base_url=f"{BASE_URL}/mcp",
+)
+
+mcp = FastMCP(
+    "ALEXVALE Gmail MCP",
+    auth=auth,
+)
 
 
 # --------------------------------------------------
