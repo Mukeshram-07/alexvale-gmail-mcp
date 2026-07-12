@@ -2,6 +2,8 @@ import os
 
 from fastmcp import FastMCP
 from fastmcp.server.auth.providers.workos import WorkOSProvider
+from key_value.aio.wrappers.encryption import FernetEncryptionWrapper
+from key_value.aio.stores.redis import RedisStore
 
 from gmail_client import search_emails, send_email
 
@@ -11,6 +13,16 @@ from gmail_client import search_emails, send_email
 # --------------------------------------------------
 
 BASE_URL = "https://alexvale-gmail-mcp.onrender.com"
+
+# Persistent Redis-backed OAuth storage (survives restarts + multi-instance)
+_redis_store = RedisStore(
+    url=os.environ["REDIS_URL"],
+    default_collection="alexvale-oauth",
+)
+_client_storage = FernetEncryptionWrapper(
+    key_value=_redis_store,
+    encryption_key=os.environ["WORKOS_CLIENT_SECRET"],
+)
 
 auth = WorkOSProvider(
     client_id=os.environ["WORKOS_CLIENT_ID"],
@@ -22,6 +34,7 @@ auth = WorkOSProvider(
     base_url=BASE_URL,
     resource_base_url=BASE_URL,
     require_authorization_consent="external",
+    client_storage=_client_storage,
 )
 
 mcp = FastMCP(
