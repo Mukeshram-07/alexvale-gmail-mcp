@@ -15,9 +15,13 @@ BASE_URL = "https://alexvale-gmail-mcp.onrender.com"
 auth = WorkOSProvider(
     client_id=os.environ["WORKOS_CLIENT_ID"],
     client_secret=os.environ["WORKOS_CLIENT_SECRET"],
-    authkit_domain=os.environ.get("WORKOS_AUTHKIT_DOMAIN", "https://studious-sweetness-40-staging.authkit.app"),
+    authkit_domain=os.environ["WORKOS_AUTHKIT_DOMAIN"],
     base_url=BASE_URL,
     resource_base_url=BASE_URL,
+    issuer_url=BASE_URL,
+    redirect_path="/auth/callback",
+    require_authorization_consent=True,
+    enable_cimd=True,
 )
 
 mcp = FastMCP(
